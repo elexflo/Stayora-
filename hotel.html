@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Details - Stayora</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/booking.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1 class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Stayora</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hotels.html">Search Hotels</a></li>
+                <li><a href="list-property.html">List Property</a></li>
+                <li id="authNav">
+                    <a href="login.html">Login</a>
+                </li>
+                <li id="userNav" style="display: none;">
+                    <a href="#" id="userEmail"></a>
+                    <button id="logoutBtn" class="btn-logout">Logout</button>
+                </li>
+                <li id="adminNav" style="display: none;">
+                    <a href="admin/index.html" class="btn-admin">Admin Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hotel Details -->
+    <div class="booking-container">
+        <div id="loadingSpinner" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Loading hotel details...</p>
+        </div>
+
+        <div id="hotelContent" style="display: none;">
+            <!-- Hotel Header -->
+            <div class="booking-header">
+                <div class="hotel-details">
+                    <img id="hotelImage" src="" alt="Hotel" class="hotel-image">
+                    <div class="hotel-info">
+                        <h2 id="hotelName"></h2>
+                        <p id="hotelAddress"></p>
+                        <div class="hotel-rating" id="hotelRating"></div>
+                        <p id="hotelDescription"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Layout -->
+            <div class="booking-layout">
+                <!-- Booking Form -->
+                <div class="booking-form">
+                    <h3>Book Your Stay</h3>
+                    
+                    <form id="bookingForm">
+                        <!-- Guest Information -->
+                        <div class="form-section">
+                            <h4>Guest Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="guestEmail">Email</label>
+                                <input type="email" id="guestEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="guestPhone">Phone Number</label>
+                                <input type="tel" id="guestPhone" required>
+                            </div>
+                        </div>
+
+                        <!-- Check-in/out -->
+                        <div class="form-section">
+                            <h4>Stay Dates</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="checkIn">Check-in Date</label>
+                                    <input type="date" id="checkIn" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkOut">Check-out Date</label>
+                                    <input type="date" id="checkOut" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="guests">Number of Guests</label>
+                                <select id="guests" required>
+                                    <option value="1">1 Guest</option>
+                                    <option value="2">2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                    <option value="5">5+ Guests</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Room Selection -->
+                        <div class="form-section">
+                            <h4>Select Room</h4>
+                            <div class="room-options" id="roomOptions">
+                                <!-- Rooms will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Special Requests -->
+                        <div class="form-section">
+                            <h4>Special Requests (Optional)</h4>
+                            <div class="form-group">
+                                <label for="specialRequests">Any special requests?</label>
+                                <textarea id="specialRequests" placeholder="e.g., High floor, late check-in, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="margin-top: 20px;">Proceed to Payment</button>
+                    </form>
+                </div>
+
+                <!-- Booking Summary -->
+                <div class="booking-summary">
+                    <h3>Booking Summary</h3>
+                    <div class="summary-row">
+                        <span class="summary-label">Hotel</span>
+                        <span class="summary-value" id="summaryHotel"></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Check-in</span>
+                        <span class="summary-value" id="summaryCheckIn">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Check-out</span>
+                        <span class="summary-value" id="summaryCheckOut">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Nights</span>
+                        <span class="summary-value" id="summaryNights">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Room Type</span>
+                        <span class="summary-value" id="summaryRoom">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Price/Night</span>
+                        <span class="summary-value" id="summaryPrice">-</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span id="summaryTotal">$0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Stayora. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/hotel.js"></script>
+</body>
+</html>
