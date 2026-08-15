@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Stayora</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/booking.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1 class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Stayora</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hotels.html">Search Hotels</a></li>
+                <li id="authNav">
+                    <a href="login.html">Login</a>
+                </li>
+                <li id="userNav" style="display: none;">
+                    <a href="#" id="userEmail"></a>
+                    <button id="logoutBtn" class="btn-logout">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Checkout Container -->
+    <div class="booking-container">
+        <div id="loadingSpinner" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing payment...</p>
+        </div>
+
+        <div id="checkoutContent" style="display: block;">
+            <h2 style="text-align: center; margin-bottom: 30px; color: var(--dark-color);">Complete Your Booking</h2>
+
+            <div class="booking-layout">
+                <!-- Payment Form -->
+                <div class="booking-form">
+                    <h3>Payment Information</h3>
+
+                    <form id="paymentForm">
+                        <!-- Billing Information -->
+                        <div class="form-section">
+                            <h4>Billing Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" id="address" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postalCode">Postal Code</label>
+                                    <input type="text" id="postalCode" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" required>
+                            </div>
+                        </div>
+
+                        <!-- Card Information -->
+                        <div class="form-section">
+                            <h4>Card Information</h4>
+                            <div class="form-group">
+                                <label for="card">Card Details</label>
+                                <div id="card-element" style="border: 1px solid var(--border-color); padding: 12px; border-radius: 4px; background-color: white;"></div>
+                                <div id="card-errors" style="color: var(--danger-color); margin-top: 10px;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Options -->
+                        <div class="form-section">
+                            <h4>Payment Method</h4>
+                            <div class="form-group checkbox">
+                                <input type="radio" id="paymentStripe" name="paymentMethod" value="stripe" checked>
+                                <label for="paymentStripe">Credit/Debit Card</label>
+                            </div>
+                            <div class="form-group checkbox">
+                                <input type="radio" id="paymentPaypal" name="paymentMethod" value="paypal">
+                                <label for="paymentPaypal">PayPal</label>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions -->
+                        <div class="form-section">
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <label for="agreeTerms">I agree to the terms and conditions and cancellation policy</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="submitBtn">Pay Now</button>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="booking-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span class="summary-label">Hotel</span>
+                        <span class="summary-value" id="summaryHotel">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Room Type</span>
+                        <span class="summary-value" id="summaryRoom">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Check-in</span>
+                        <span class="summary-value" id="summaryCheckIn">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Check-out</span>
+                        <span class="summary-value" id="summaryCheckOut">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Number of Nights</span>
+                        <span class="summary-value" id="summaryNights">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Price per Night</span>
+                        <span class="summary-value" id="summaryPrice">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value" id="summarySubtotal">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Tax (10%)</span>
+                        <span class="summary-value" id="summaryTax">-</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total Amount</span>
+                        <span id="summaryTotal">$0</span>
+                    </div>
+
+                    <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 4px; margin-top: 20px; font-size: 14px;">
+                        <strong>✓ Secure Payment</strong>
+                        <p>Your payment is encrypted and secure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Stayora. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>
