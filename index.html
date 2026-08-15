@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stayora - Find Your Perfect Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1 class="logo">Stayora</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hotels.html">Search Hotels</a></li>
+                <li><a href="list-property.html">List Property</a></li>
+                <li id="authNav">
+                    <a href="login.html">Login</a>
+                </li>
+                <li id="userNav" style="display: none;">
+                    <a href="#" id="userEmail"></a>
+                    <button id="logoutBtn" class="btn-logout">Logout</button>
+                </li>
+                <li id="adminNav" style="display: none;">
+                    <a href="admin/index.html" class="btn-admin">Admin Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Welcome to Stayora</h2>
+            <p>Find and book the perfect hotel for your next adventure</p>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <form id="searchForm" class="search-form">
+                    <div class="search-field">
+                        <label for="destination">Destination</label>
+                        <input type="text" id="destination" placeholder="City or hotel name" required>
+                    </div>
+                    <div class="search-field">
+                        <label for="checkIn">Check-in</label>
+                        <input type="date" id="checkIn" required>
+                    </div>
+                    <div class="search-field">
+                        <label for="checkOut">Check-out</label>
+                        <input type="date" id="checkOut" required>
+                    </div>
+                    <div class="search-field">
+                        <label for="guests">Guests</label>
+                        <select id="guests" required>
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                            <option value="5">5+ Guests</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Hotels -->
+    <section class="featured-section">
+        <div class="container">
+            <h2>Featured Hotels</h2>
+            <div id="featuredHotels" class="hotels-grid">
+                <!-- Hotels will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2>Why Choose Stayora?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Best Prices</h3>
+                    <p>Guaranteed lowest prices on hotel bookings worldwide</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Easy Booking</h3>
+                    <p>Simple and secure booking process in just a few clicks</p>
+                </div>
+                <div class="feature-card">
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock customer support for all your needs</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Secure Payment</h3>
+                    <p>Multiple payment options with secure encryption</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Stayora. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
